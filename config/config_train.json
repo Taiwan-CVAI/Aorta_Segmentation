@@ -1,0 +1,403 @@
+{
+  "cache_rate": 1,
+  "epochs": 3000,
+  "in_channels": 1,
+  "out_classes": 6,
+  "num_interval_per_valid": 20,
+  "learning_rate": 0.0001,
+  "multi_gpu": false,
+  "amp": true,
+  "determinism": {
+    "random_seed": 0
+  },
+  "cudnn_benchmark": false,
+  "dont_load_ckpt_model": true,
+  "train": {
+    "loss": {
+      "name": "DiceLoss",
+      "args":{
+        "jaccard": false,
+        "to_onehot_y": true,
+        "softmax": true,
+        "squared_pred": true
+      }
+    },
+    "optimizer": {
+      "name": "Adam",
+      "args": {
+        "lr": "{learning_rate}"
+      }
+    },
+    "lr_scheduler": {
+      "name": "StepLR",
+      "args": {
+        "step_size": 5000,
+        "gamma": 0.1
+      }
+    },
+    "model": {
+      "name": "UNet",
+      "args": {
+        "dimensions": 3,
+        "in_channels": "{in_channels}",
+        "out_channels": "{out_classes}",
+        "channels": [16, 32, 64, 128, 256],
+        "strides": [2, 2, 2, 2],
+        "num_res_units": 2,
+        "norm": "batch"
+      }
+    },
+    "pre_transforms": [
+      {
+        "name": "LoadImaged",
+        "args": {
+          "keys": [
+            "image",
+            "label"
+          ]
+        }
+      },
+      {
+        "name": "EnsureChannelFirstd",
+        "args": {
+          "keys": [
+            "image",
+            "label"
+          ]
+        }
+      },
+      {
+        "name": "ScaleIntensityRanged",
+        "args": {
+          "keys": "image",
+          "a_min": -300,
+          "a_max": 300,
+          "b_min": 0.0,
+          "b_max": 1.0,
+          "clip": true
+        }
+      },
+      {
+        "name": "CropForegroundd",
+        "args": {
+          "keys": [
+            "image",
+            "label"
+          ],
+          "source_key": "image"
+        }
+      },
+      {
+        "name": "SpatialPadd",
+        "args": {
+          "keys": [
+            "image",
+            "label"
+          ],
+          "spatial_size": [
+            96,
+            96,
+            32
+          ],
+          "mode": [
+            "minimum",
+            "constant"
+          ]
+        }
+      },
+      {
+        "name": "RandCropByPosNegLabeld",
+        "args": {
+          "keys": [
+            "image",
+            "label"
+          ],
+          "label_key": "label",
+          "spatial_size": [
+            96,
+            96,
+            32
+          ],
+          "pos": 1,
+          "neg": 1,
+          "num_samples": 4,
+          "image_key": "image",
+          "image_threshold": 0
+        }
+      },
+      {
+        "name": "RandFlipd",
+        "args": {
+          "keys": [
+            "image",
+            "label"
+          ],
+          "spatial_axis": [0],
+          "prob": 0.10
+        }
+      },
+      {
+        "name": "RandFlipd",
+        "args": {
+          "keys": [
+            "image",
+            "label"
+          ],
+          "spatial_axis": [1],
+          "prob": 0.10
+        }
+      },
+      {
+        "name": "RandFlipd",
+        "args": {
+          "keys": [
+            "image",
+            "label"
+          ],
+          "spatial_axis": [2],
+          "prob": 0.10
+        }
+      },
+      {
+        "name": "RandRotate90d",
+        "args": {
+          "keys": [
+            "image",
+            "label"
+          ],
+          "prob": 0.10,
+          "max_k": 3
+        }
+      },
+      {
+        "name": "RandShiftIntensityd",
+        "args": {
+          "keys": "image",
+          "offsets": 0.10,
+          "prob": 0.50
+        }
+      },
+      {
+        "name": "ToTensord",
+        "args": {
+          "keys": [
+            "image",
+            "label"
+          ]
+        }
+      }
+    ],
+    "dataset": {
+      "name": "CacheDataset",
+      "data_list_file_path": "{DATASET_JSON}",
+      "data_file_base_dir": "{DATA_ROOT}",
+      "data_list_key": "training",
+      "args": {
+        "cache_rate": "{cache_rate}",
+        "num_workers": 4
+      }
+    },
+    "dataloader": {
+      "name": "DataLoader",
+      "args": {
+        "batch_size": 2,
+        "shuffle": true,
+        "num_workers": 4
+      }
+    },
+    "inferer": {
+      "name": "SimpleInferer"
+    },
+    "handlers": [
+      {
+        "name": "CheckpointLoader",
+        "disabled": "{dont_load_ckpt_model}",
+        "args": {
+          "load_path": "{MMAR_CKPT}",
+          "load_dict": ["model"]
+        }
+      },
+      {
+        "name": "LrScheduleHandler",
+        "args": {
+          "print_lr": true
+        }
+      },
+      {
+        "name": "ValidationHandler",
+        "args": {
+          "epoch_level": true,
+          "interval": "{num_interval_per_valid}"
+        }
+      },
+      {
+        "name": "CheckpointSaver",
+        "rank": 0,
+        "args": {
+          "save_dir": "{MMAR_CKPT_DIR}",
+          "save_dict": ["model", "optimizer", "lr_scheduler", "train_conf"],
+          "save_final": true,
+          "save_interval": 400
+        }
+      },
+      {
+        "name": "StatsHandler",
+        "rank": 0,
+        "args": {
+          "tag_name": "train_loss",
+          "output_transform": "lambda x: x['loss']"
+        }
+      },
+      {
+        "name": "TensorBoardStatsHandler",
+        "rank": 0,
+        "args": {
+          "log_dir": "{MMAR_CKPT_DIR}",
+          "tag_name": "train_loss",
+          "output_transform": "lambda x: x['loss']"
+        }
+      }
+    ],
+    "post_transforms": [
+      {
+        "name": "Activationsd",
+        "args": {
+          "keys": "pred",
+          "softmax": true
+        }
+      },
+      {
+        "name": "AsDiscreted",
+        "args": {
+          "keys": ["pred", "label"],
+          "argmax": [true, false],
+          "to_onehot": true,
+          "n_classes": "{out_classes}"
+        }
+      }
+    ],
+    "metrics": [
+      {
+        "name": "Accuracy",
+        "log_label": "train_acc",
+        "is_key_metric": true,
+        "args": {
+          "output_transform": "lambda x: (x['pred'], x['label'])"
+        }
+      }
+    ],
+    "trainer": {
+      "name": "SupervisedTrainer",
+      "args": {
+        "max_epochs": "{epochs}"
+      }
+    }
+  },
+  "validate": {
+    "pre_transforms": [
+      {
+        "ref": "LoadImaged"
+      },
+      {
+        "ref": "EnsureChannelFirstd"
+      },
+      {
+        "ref": "ScaleIntensityRanged"
+      },
+      {
+        "ref": "CropForegroundd"
+      },
+      {
+        "ref": "SpatialPadd"
+      },
+      {
+        "ref": "ToTensord"
+      }
+    ],
+    "dataset": {
+      "name": "CacheDataset",
+      "data_list_file_path": "{DATASET_JSON}",
+      "data_file_base_dir": "{DATA_ROOT}",
+      "data_list_key": "validation",
+      "args": {
+        "cache_rate": "{cache_rate}",
+        "num_workers": 4
+      }
+    },
+    "dataloader": {
+      "name": "DataLoader",
+      "args": {
+        "batch_size": 1,
+        "shuffle": false,
+        "num_workers": 4
+      }
+    },
+    "inferer": {
+      "name": "SlidingWindowInferer",
+      "args": {
+        "roi_size": [
+          192,
+          192,
+          64
+        ],
+        "sw_batch_size": 4,
+        "overlap": 0.8
+      }
+    },
+    "handlers": [
+      {
+        "name": "StatsHandler",
+        "rank": 0,
+        "args": {
+          "output_transform": "lambda x: None"
+        }
+      },
+      {
+        "name": "TensorBoardStatsHandler",
+        "rank": 0,
+        "args": {
+          "log_dir": "{MMAR_CKPT_DIR}",
+          "output_transform": "lambda x: None"
+        }
+      },
+      {
+        "name": "CheckpointSaver",
+        "rank": 0,
+        "args": {
+          "save_dir": "{MMAR_CKPT_DIR}",
+          "save_dict": ["model", "train_conf"],
+          "save_key_metric": true
+        }
+      }
+    ],
+    "post_transforms": [
+      {
+        "ref": "Activationsd"
+      },
+      {
+        "ref": "AsDiscreted"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "MeanDice",
+        "log_label": "val_mean_dice",
+        "is_key_metric": true,
+        "args": {
+          "include_background": false,
+          "output_transform": "lambda x: (x['pred'], x['label'])"
+        }
+      },
+      {
+        "name": "Accuracy",
+        "log_label": "val_acc",
+        "args": {
+          "output_transform": "lambda x: (x['pred'], x['label'])"
+        }
+      }
+    ],
+    "evaluator": {
+      "name": "SupervisedEvaluator"
+    }
+  }
+}

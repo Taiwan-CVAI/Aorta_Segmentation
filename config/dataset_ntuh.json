@@ -1,0 +1,340 @@
+{
+    "description": "NTUH",
+    "labels":
+    {
+        "0": "total",
+        "1": "heart",
+        "2": "asc",
+        "3": "arc",
+        "4": "desc1",
+        "5": "desc2"
+    },
+    "licence": "CC-BY-SA 4.0",
+    "modality":
+    {
+        "0": "CT"
+    },
+    "name": "heart",
+    "numTest": 16,
+    "numTraining": 61,
+    "reference": "xxxx",
+    "release": "1.0 04/05/2018",
+    "tensorImageSize": "3D",
+    "test":
+    [
+        {
+            "image": "CVAI-0225/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0225/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-1209/3 LungLowDose  1.0  B20f.nii.gz",
+            "label": "CVAI-1209/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0898/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0898/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0795/4 LungCARE.nii.gz",
+            "label": "CVAI-0795/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0766/3 Chest C-  1.0  B40f Recon2.nii.gz",
+            "label": "CVAI-0766/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0798/3 LungCARE  1.0  B40f.nii.gz",
+            "label": "CVAI-0798/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0811/4 LungCARE.nii.gz",
+            "label": "CVAI-0811/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-1073/3 LungCARE.nii.gz",
+            "label": "CVAI-1073/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0232/11 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0232/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0861/7 Vol 1.0.nii.gz",
+            "label": "CVAI-0861/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2645/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2645/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2496/302 LungCARE.nii.gz",
+            "label": "CVAI-2496/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0834/3 LungCARE 1mm Axial 1.0  Low Dose Body LungCARE 1mm.nii.gz",
+            "label": "CVAI-0834/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0846/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0846/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2500/3 LungCARE 1mm Axial 1.0  Low Dose Body LungCARE 1mm.nii.gz",
+            "label": "CVAI-2500/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2650/3 LungCARE.nii.gz",
+            "label": "CVAI-2650/lkm_segmentation_sep.nii.gz"
+        }
+    ],
+    "training":
+    [
+        {
+            "image": "CVAI-0817/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0817/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2582/3 LungCARE.nii.gz",
+            "label": "CVAI-2582/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2483/301 CHEST C- 1.25.nii.gz",
+            "label": "CVAI-2483/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0928/3 LungCARE 1mm Axial 1.0  Std. Axial Body LungCARE 1mm.nii.gz",
+            "label": "CVAI-0928/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-1048/3 LungCARE.nii.gz",
+            "label": "CVAI-1048/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-1810/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-1810/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0782/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0782/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2640/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2640/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2649/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2649/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0813/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0813/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2490/3 Chest C-  1.0  I40f  2.nii.gz",
+            "label": "CVAI-2490/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0211/7 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0211/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0744/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0744/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2662/3 LungCARE.nii.gz",
+            "label": "CVAI-2662/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0777/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0777/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0749/8 LungCARE.nii.gz",
+            "label": "CVAI-0749/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0903/3 Chest C-  1.0  I40f  1.nii.gz",
+            "label": "CVAI-0903/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0833/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0833/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0829/4 LungCARE.nii.gz",
+            "label": "CVAI-0829/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-1065/3 LungCARE 1mm Axial 1.0  Std. Axial Body LungCARE 1mm.nii.gz",
+            "label": "CVAI-1065/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0465/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0465/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0417/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0417/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0812/3 LungCARE 1.0 B40f.nii.gz",
+            "label": "CVAI-0812/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0235/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0235/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0781/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0781/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-1960/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-1960/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0859/4 LungCARE.nii.gz",
+            "label": "CVAI-0859/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2651/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2651/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0742/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0742/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0624/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0624/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0907/4 LungCARE.nii.gz",
+            "label": "CVAI-0907/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0233/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0233/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2653/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2653/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0832/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0832/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2643/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2643/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0835/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0835/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2647/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2647/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-1824/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-1824/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2648/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2648/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2336/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2336/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2385/4 LungCARE.nii.gz",
+            "label": "CVAI-2385/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0847/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0847/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2494/4 LungCARE.nii.gz",
+            "label": "CVAI-2494/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2644/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2644/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0849/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0849/lkm_segmentation_sep.nii.gz"
+        }
+    ],
+    "validation":
+    [
+        {
+            "image": "CVAI-2491/4 LungCARE.nii.gz",
+            "label": "CVAI-2491/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2646/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2646/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0917/4 LungCARE.nii.gz",
+            "label": "CVAI-0917/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0399/3 Chest C-  1.0  B40f Recon2.nii.gz",
+            "label": "CVAI-0399/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0809/4 LungCARE.nii.gz",
+            "label": "CVAI-0809/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2148/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2148/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0738/303 CA C- 1.25.nii.gz",
+            "label": "CVAI-0738/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2652/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-2652/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0743/4 LungCARE.nii.gz",
+            "label": "CVAI-0743/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-1054/4 LungCARE.nii.gz",
+            "label": "CVAI-1054/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0805/3 LungCARE.nii.gz",
+            "label": "CVAI-0805/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-1068/3 LungCARE 1mm Axial 1.0  Std. Axial Body LungCARE 1mm.nii.gz",
+            "label": "CVAI-1068/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0442/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0442/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0909/3 LungCARE.nii.gz",
+            "label": "CVAI-0909/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-2482/4 LungCARE.nii.gz",
+            "label": "CVAI-2482/lkm_segmentation_sep.nii.gz"
+        },
+        {
+            "image": "CVAI-0901/3 LungCARE 1mm Axial 1.0.nii.gz",
+            "label": "CVAI-0901/lkm_segmentation_sep.nii.gz"
+        }
+    ]
+}

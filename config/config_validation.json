@@ -1,0 +1,174 @@
+{
+  "multi_gpu": false,
+  "amp": true,
+  "cudnn_benchmark": true,
+  "dont_load_ts_model": false,
+  "dont_load_ckpt_model": true,
+  "dont_save_segmentation": false,
+  "data_list_key": "testing",
+  "model": [
+    {
+      "ts_path": "{MMAR_TORCHSCRIPT}",
+      "disabled": "{dont_load_ts_model}"
+    },
+    {
+      "ckpt_path": "{MMAR_CKPT}",
+      "disabled": "{dont_load_ckpt_model}"
+    }
+  ],
+  "pre_transforms": [
+  {
+    "name": "LoadImaged",
+    "args": {
+      "keys": ["image", "label"]
+    }
+  },
+  {
+    "name": "EnsureChannelFirstd",
+    "args": {
+      "keys": [
+        "image",
+        "label"
+      ]
+    }
+  },
+  {
+    "name": "CopyItemsd",
+    "args": {
+      "keys": [
+        "label"
+      ],
+      "times": 1,
+      "names": ["label_foreground"]
+    }
+  },
+  {
+    "name": "CropForegroundd",
+    "args": {
+      "keys": ["image", "label_foreground"],
+      "source_key": "label",
+      "margin": 20
+    }
+  },
+  {
+    "name": "DivisiblePadd",
+    "args": {
+      "keys": ["image", "label_foreground"],
+      "k": 32
+    }
+  },
+  {
+    "name": "NormalizeIntensityd",
+    "args": {
+      "keys": [
+        "image"
+      ],
+      "nonzero": true,
+      "channel_wise": true
+    }
+  },
+  {
+    "name": "AddExtremePointsChanneld",
+    "args": {
+      "keys": [
+        "image"
+      ],
+      "label_key": "label_foreground",
+      "sigma": 3,
+      "pert": 0
+    }
+  },
+  {
+    "name": "ToTensord",
+    "args": {
+      "keys": ["image","label"]
+    }
+  }
+  ],
+  "dataset": {
+    "name": "Dataset",
+    "data_list_file_path": "{DATASET_JSON}",
+    "data_file_base_dir": "{DATA_ROOT}",
+    "data_list_key": "{data_list_key}"
+  },
+  "dataloader": {
+    "name": "DataLoader",
+    "args": {
+      "batch_size": 1,
+      "shuffle": false,
+      "num_workers": 4
+    }
+  },
+  "inferer": {
+    "name": "SimpleInferer"
+  },
+  "handlers": [
+    {
+      "name": "CheckpointLoader",
+      "disabled": "{dont_load_ckpt_model}",
+      "args": {
+        "load_path": "{MMAR_CKPT}",
+        "load_dict": ["model"]
+      }
+    },
+    {
+      "name": "StatsHandler",
+      "rank": 0,
+      "args": {
+        "output_transform": "lambda x: None"
+      }
+    },
+    {
+      "name": "TransformInverter",
+      "args": {
+        "output_keys": ["pred"],
+        "batch_keys": "image",
+        "postfix": "inverted",
+        "nearest_interp": false
+      }
+    },
+    {
+      "name": "SegmentationSaver",
+      "args": {
+        "resample": false,
+        "output_dir": "{MMAR_EVAL_OUTPUT_PATH}",
+        "batch_transform": "lambda x: x['image_meta_dict']",
+        "output_transform": "lambda x: __import__('monai').transforms.AsDiscrete(threshold_values=True)(x['pred_inverted'][0][None].detach().cpu())"
+      }
+    },
+    {
+      "name": "MetricsSaver",
+      "args": {
+        "save_dir": "{MMAR_EVAL_OUTPUT_PATH}",
+        "metrics": "*",
+        "metric_details": ["val_mean_dice"],
+        "batch_transform": "lambda x: x['image_meta_dict']",
+        "summary_ops": "*",
+        "save_rank": 0
+      }
+    }
+  ],
+  "post_transforms": [
+    {
+      "name": "Activationsd",
+      "args": {
+        "keys": "pred",
+        "sigmoid": true
+      }
+    }
+  ],
+  "metrics": [
+    {
+      "name": "MeanDice",
+      "log_label": "val_mean_dice",
+      "is_key_metric": true,
+      "args": {
+        "include_background": true,
+        "output_transform": "lambda x: (__import__('monai').transforms.AsDiscrete(threshold_values=True)(x['pred_inverted'][0][None].detach().cpu()), x['label'].detach().cpu())"
+      }
+    }
+  ],
+  "evaluator": {
+    "name": "SupervisedEvaluator"
+  }
+}
